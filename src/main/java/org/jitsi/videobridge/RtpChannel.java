@@ -423,6 +423,7 @@ public class RtpChannel
 
             if (ctrlAddr == null)
             {
+            	System.out.println("Boven: ctrlAddr is NULL ");
                 newStreamTarget
                     = new MediaStreamTarget(
                             new InetSocketAddress(dataAddr, dataPort),
@@ -430,6 +431,8 @@ public class RtpChannel
             }
             else
             {
+            	System.out.println("Boven: ctrlAddr: " + (ctrlAddr.toString()));
+            	System.out.println("Boven: portAddr: " + ctrlPort);
                 newStreamTarget
                     = new MediaStreamTarget(
                             dataAddr, dataPort,
@@ -971,14 +974,22 @@ public class RtpChannel
                 stream.setProperty(
                     MediaStream.PNAME_RECEIVER_IDENTIFIER, endpoint.getID());
             }
-            if (transformEngine != null)
+            if (transformEngine != null){
                 stream.setExternalTransformer(transformEngine);
+                System.out.println("Boven: External transform engine");
+            }
 
             // The transport manager could be already connected, in which case
             // (since we just created the stream), any previous calls to
             // transportConnected() have failed started the stream. So trigger
             // one now, to make sure that the stream is started.
             TransportManager transportManager = getTransportManager();
+            
+            // Boven: test transport
+            if (transportManager == null){
+            	System.out.println("Boven: TranportManager not obtained");
+            }
+            
             if (transportManager != null && transportManager.isConnected())
             {
                 transportConnected();
@@ -1044,6 +1055,7 @@ public class RtpChannel
 
             if (dataAddr != null)
             {
+            	System.out.println("Boven: Data address set " + dataAddr.toString());
                 this.streamTarget.setDataHostAddress(dataAddr.getAddress());
                 this.streamTarget.setDataPort(dataAddr.getPort());
             }
@@ -1052,6 +1064,7 @@ public class RtpChannel
 
             if (ctrlAddr != null)
             {
+            	System.out.println("Boven: Control address set " + ctrlAddr.toString());
                 this.streamTarget.setControlHostAddress(ctrlAddr.getAddress());
                 this.streamTarget.setControlPort(ctrlAddr.getPort());
             }

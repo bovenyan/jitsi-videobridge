@@ -891,11 +891,13 @@ public class IceUdpTransportManager
     private synchronized void doStartConnectivityEstablishment(
             IceUdpTransportPacketExtension transport)
     {
+    	System.out.println("Boven: Running StartConnectivityEstablishment");
         if (closed)
             return;
 
         if (transport.isRtcpMux())
         {
+        	System.out.println("Boven: this is RtcpMux");
             rtcpmux = true;
             if (channelForDtls != null && channelForDtls instanceof RtpChannel)
             {
@@ -910,6 +912,7 @@ public class IceUdpTransportManager
 
         if (!dfpes.isEmpty())
         {
+        	System.out.println("Boven: Get a finger print!!! generating remote ");
             Map<String, String> remoteFingerprints = new LinkedHashMap<>();
 
             for (DtlsFingerprintPacketExtension dfpe : dfpes)
@@ -1034,6 +1037,7 @@ public class IceUdpTransportManager
 
         if (iceAgentStateIsRunning)
         {
+        	System.out.println("Boven: IceAgentIsRunning, remoteCandidateCount " + remoteCandidateCount);
             if (remoteCandidateCount == 0)
             {
                 // XXX Effectively, the check above but realizing that all
@@ -1053,6 +1057,7 @@ public class IceUdpTransportManager
         }
         else if (remoteCandidateCount != 0)
         {
+        	System.out.println("Boven: IceAgentIsNOTRunning, remoteCandidateCount " + remoteCandidateCount);
             // Once again because the ICE Agent does not support adding
             // candidates after the connectivity establishment has been started
             // and because multiple transport-info JingleIQs may be used to send
@@ -1796,7 +1801,8 @@ public class IceUdpTransportManager
                         if (IceProcessingState.COMPLETED.equals(state)
                                 || IceProcessingState.TERMINATED.equals(state))
                         {
-                            startDtls();
+                        	System.out.println("Boven: Here DTLS starts");
+                            startDtls();				// Boven: Root cause for why the transport is encrpyted
                             onIceConnected();
                         }
                         else

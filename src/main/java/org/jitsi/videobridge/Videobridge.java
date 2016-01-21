@@ -571,6 +571,7 @@ public class Videobridge
             int options)
         throws Exception
     {
+    	System.out.println("Boven-ColibriConferenceIQ Received: " + conferenceIQ.toXML());
         String focus = conferenceIQ.getFrom();
         Conference conference;
 
@@ -735,6 +736,7 @@ public class Videobridge
                              */
                             if (channelExpire != 0)
                             {
+                            	System.out.println("Boven: No channel ID. New Channel Created");
                                 channel
                                     = content.createRtpChannel(
                                         channelBundleId,
@@ -745,6 +747,7 @@ public class Videobridge
                         }
                         else
                         {
+                        	System.out.println("Boven: Has channel ID. Get existing channel");
                             channel
                                 = (RtpChannel) content.getChannel(channelID);
                         }
@@ -853,8 +856,9 @@ public class Videobridge
                                 }
                             }
 
-                            if (channelBundleId != null)
+                            if (channelBundleId != null)		// Hammer doesn't experience this...
                             {
+                            	System.out.println("Boven: channel Bundled, add channel to transport Manager");
                                 TransportManager transportManager
                                         = conference.getTransportManager(
                                         channelBundleId,
@@ -863,7 +867,8 @@ public class Videobridge
                                 transportManager.addChannel(channel);
                             }
 
-                            channel.setTransport(channelIQ.getTransport());
+                            channel.setTransport(channelIQ.getTransport());	// Boven : this only happens to Hammer. Meet is NULL. 
+                            												// it leads to transport setting.
 
                             /*
                              * Provide (a description of) the current state of

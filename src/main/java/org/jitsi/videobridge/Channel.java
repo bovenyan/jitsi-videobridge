@@ -438,7 +438,7 @@ public abstract class Channel
     protected DtlsControl getDtlsControl()
     {
         TransportManager transportManager = getTransportManager();
-
+        
         return
             (transportManager == null)
                 ? null
@@ -724,7 +724,8 @@ public abstract class Channel
             TransportManager transportManager = getTransportManager();
             if (transportManager != null)
             {
-                transportManager.startConnectivityEstablishment(transport);
+            	System.out.println("Boven: IMP1 Set transport to transport manager");
+                transportManager.startConnectivityEstablishment(transport);	// Bovne: start establishment of transport.
             }
             else
             {
